@@ -1,0 +1,31 @@
+schema: spec-driven
+
+context: |
+  Project: TypeWall, a lightweight schema-first runtime validation library for Python.
+  Package/import API: typewall; documentation prefers `from typewall import w` and
+  also supports `tw` as an alias.
+  Runtime support: CPython 3.9 through 3.14. Keep syntax and standard-library usage
+  compatible with Python 3.9 unless a later change explicitly raises the minimum.
+  Tooling: uv, Hatchling, pytest, Hypothesis, pytest-cov, Ruff, and MyPy.
+  Layout: the Python package is at the repository root in `typewall/`; tests are in
+  `tests/`; generated build output and local environments are not source artifacts.
+  Core behavior: parsing is strict and non-coercing; schemas are immutable and
+  reusable; independent issues are aggregated with deterministic nested paths;
+  object schemas reject unknown keys by default; mutable defaults are copied.
+  Quality gates: formatting, linting, static typing, unit/property tests, coverage,
+  package builds, clean-wheel installation, and the supported-Python matrix.
+  Delivery is phased: core MVP, validation enhancements, then integrations/release.
+
+rules:
+  proposal:
+    - State phase prerequisites and explicitly identify deferred capabilities.
+    - Keep capability boundaries non-overlapping with other active changes.
+  design:
+    - Preserve Python 3.9 compatibility and the lightweight framework-independent core.
+    - Record public API, error-contract, dependency, and compatibility decisions.
+  specs:
+    - Every requirement must be testable and include at least one WHEN/THEN scenario.
+    - Specify strict type behavior, error paths/codes, ordering, and sensitive-value handling where relevant.
+  tasks:
+    - Group tasks by implementation phase and keep dependency order explicit.
+    - Include tests alongside each capability plus a final compatibility and package-build gate.
