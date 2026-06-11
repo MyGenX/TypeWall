@@ -8,9 +8,6 @@ from pathlib import Path
 FORBIDDEN_BASE_REQUIREMENTS = {
     "fastapi",
     "httpx",
-    "mkdocs",
-    "mkdocs-material",
-    "mkdocstrings",
     "pytest",
     "pytest-benchmark",
 }

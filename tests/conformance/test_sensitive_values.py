@@ -30,7 +30,7 @@ def test_cli_error_does_not_expose_rejected_value() -> None:
         [
             sys.executable,
             "-m",
-            "typewall.cli",
+            "typewall.adapters.cli",
             "validate",
             "tests.integration.cli_targets:schema",
             "-",

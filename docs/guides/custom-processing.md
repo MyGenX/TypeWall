@@ -1,4 +1,7 @@
-# Custom Processing
+---
+title: "Custom Processing"
+description: "Refinements and transforms after built-in validation"
+---
 
 Refinements run after built-in validation. Transforms run only after all validation and refinements succeed.
 
@@ -9,4 +12,6 @@ Name = w.str().refine(lambda value: bool(value.strip()), "Name is empty").transf
 assert Name.parse("  Ada  ") == "Ada"
 ```
 
+<Warning>
 Arbitrary callbacks cannot be represented faithfully in JSON Schema unless explicit export metadata is supplied.
+</Warning>

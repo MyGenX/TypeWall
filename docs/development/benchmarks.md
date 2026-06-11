@@ -1,4 +1,7 @@
-# Benchmarks
+---
+title: "Benchmarks"
+description: "Run and compare deterministic benchmark workloads"
+---
 
 Install the benchmark group and run the deterministic workloads:
 

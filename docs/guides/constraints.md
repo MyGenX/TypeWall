@@ -1,4 +1,7 @@
-# Constraints
+---
+title: "Constraints"
+description: "Length, format, and numeric range constraints"
+---
 
 String schemas support length, email, URL, UUID, and regex constraints. Numeric schemas support inclusive ranges plus positive and negative checks.
 
@@ -12,4 +15,6 @@ Account = w.object({
 })
 ```
 
+<Note>
 Constraint builders return new schemas; the original schema remains unchanged.
+</Note>

@@ -1,4 +1,7 @@
-# Validation Errors
+---
+title: "Validation Errors"
+description: "Inspect structured, deterministic validation failures"
+---
 
 `Schema.parse()` raises `ValidationError`. Its `issues` tuple retains deterministic traversal order and each `ValidationIssue` includes `path`, `code`, `message`, `expected`, and `received_type` fields.
 
@@ -12,4 +15,6 @@ except ValidationError as error:
     assert [issue.path for issue in error.issues] == [("count",), ("enabled",)]
 ```
 
+<Warning>
 Error messages report types and paths without embedding complete rejected values.
+</Warning>

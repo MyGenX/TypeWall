@@ -1,4 +1,7 @@
-# FastAPI
+---
+title: "FastAPI"
+description: "Validate request bodies with the optional FastAPI integration"
+---
 
 Install `typewall[fastapi]`, then use the canonical integration path:
 
@@ -15,4 +18,6 @@ async def create_user(user=Depends(body)):
     return user
 ```
 
+<Note>
 Validation failures use HTTP 422 with body-relative paths and TypeWall issue codes.
+</Note>

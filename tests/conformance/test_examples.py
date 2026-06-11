@@ -21,7 +21,7 @@ def test_cli_example_runs() -> None:
         [
             sys.executable,
             "-m",
-            "typewall.cli",
+            "typewall.adapters.cli",
             "validate",
             "examples.cli.schema:User",
             "examples/cli/user.json",

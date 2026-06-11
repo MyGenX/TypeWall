@@ -10,7 +10,7 @@ ROOT = Path(__file__).resolve().parents[2]
 
 def run_cli(*args: str, input_text: str = "") -> subprocess.CompletedProcess[str]:
     return subprocess.run(
-        [sys.executable, "-m", "typewall.cli", *args],
+        [sys.executable, "-m", "typewall.adapters.cli", *args],
         cwd=ROOT,
         input=input_text,
         text=True,

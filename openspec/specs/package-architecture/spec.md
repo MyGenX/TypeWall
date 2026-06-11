@@ -11,21 +11,21 @@ TypeWall SHALL organize implementation code into `core`, `schemas`, `adapters`, 
 - **THEN** the import succeeds without importing FastAPI or other optional frameworks
 
 ### Requirement: Stable public imports
-The root package and legacy direct module paths SHALL continue to expose the same public classes, functions, builders, results, issues, and exceptions after relocation.
+The root package SHALL expose the same public classes, functions, builders, results, issues, and exceptions, each resolving to the canonical object defined in its layered package.
 
-#### Scenario: Legacy and canonical object identity
-- **WHEN** a public object is imported through its legacy path and its canonical path
+#### Scenario: Root and canonical object identity
+- **WHEN** a public object is imported from the root package and from its canonical layered module
 - **THEN** both imports resolve to the identical Python object
 
 ### Requirement: Canonical integration paths
-Optional framework helpers SHALL be documented under `typewall.integrations` while their existing direct paths remain compatible.
+Optional framework helpers SHALL be exposed under `typewall.integrations`.
 
-#### Scenario: FastAPI helper migration
-- **WHEN** `request_body` is imported from `typewall.fastapi` and `typewall.integrations.fastapi`
-- **THEN** both names reference the same helper and preserve the optional-dependency error contract
+#### Scenario: FastAPI helper canonical path
+- **WHEN** `request_body` is imported from `typewall.integrations.fastapi`
+- **THEN** the helper is available and preserves the optional-dependency error contract
 
 ### Requirement: Isolated module imports
-Every public package layer and compatibility module SHALL import successfully in a fresh interpreter under its documented dependency set without circular-import failures.
+Every public package layer SHALL import successfully in a fresh interpreter under its documented dependency set without circular-import failures.
 
 #### Scenario: Fresh interpreter import sweep
 - **WHEN** CI imports each public module in a separate process

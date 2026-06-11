@@ -36,7 +36,7 @@ def test_cli_structured_errors_are_machine_readable() -> None:
         [
             sys.executable,
             "-m",
-            "typewall.cli",
+            "typewall.adapters.cli",
             "validate",
             "--json",
             "tests.integration.cli_targets:schema",

@@ -37,11 +37,6 @@ typewall = "typewall.adapters.cli:main"
 [project.optional-dependencies]
 fastapi = ["fastapi>=0.115,<1"]
 cli = []
-docs = [
-  "mike>=2,<3",
-  "mkdocs-material>=9.5,<10",
-  "mkdocstrings[python]>=0.27,<1",
-]
 
 [dependency-groups]
 test = [
@@ -80,7 +75,6 @@ include = [
   "/README.md",
   "/CHANGELOG.md",
   "/LICENSE",
-  "/mkdocs.yml",
   "/pyproject.toml",
 ]
 

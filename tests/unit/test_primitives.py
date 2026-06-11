@@ -3,7 +3,7 @@ from typing import Any, Type
 import pytest
 
 from typewall import ValidationError, w
-from typewall.schema import Schema
+from typewall.core.schema import Schema
 
 
 class Text(str):

@@ -1,7 +1,7 @@
 import pytest
 
 from typewall import ValidationError, w
-from typewall.composition import LazySchema
+from typewall.schemas.composition import LazySchema
 
 
 def test_literal_distinguishes_boolean_from_integer() -> None:

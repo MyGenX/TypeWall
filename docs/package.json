@@ -1,0 +1,13 @@
+{
+  "name": "typewall-docs",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Mintlify documentation site for TypeWall",
+  "scripts": {
+    "dev": "mint dev",
+    "broken-links": "mint broken-links"
+  },
+  "devDependencies": {
+    "mint": "^4.2.614"
+  }
+}

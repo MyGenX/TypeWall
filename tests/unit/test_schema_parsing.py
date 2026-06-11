@@ -1,9 +1,9 @@
 import pytest
 
 from typewall import ValidationError, w
-from typewall._context import ParseContext
-from typewall._sentinels import INVALID, MISSING
-from typewall.schema import Schema
+from typewall.core.context import ParseContext
+from typewall.core.schema import Schema
+from typewall.core.sentinels import INVALID, MISSING
 
 
 def test_parse_returns_validated_value() -> None:

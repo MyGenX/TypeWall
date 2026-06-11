@@ -1,4 +1,7 @@
-# Python Typing
+---
+title: "Python Typing"
+description: "Derive schemas from annotations, TypedDict, and dataclasses"
+---
 
 `schema_from_type()` derives schemas from supported standard annotations, `TypedDict`, and dataclasses.
 
@@ -16,4 +19,6 @@ UserSchema = schema_from_type(User)
 assert UserSchema.parse({"name": "Ada"}) == User(name="Ada")
 ```
 
+<Note>
 MyPy and Pyright fixtures verify the public generic output contract.
+</Note>

@@ -45,7 +45,7 @@ def verify_contents(wheel: Path, sdist: Path) -> None:
             raise SystemExit(f"Wheel is missing: {sorted(missing)}")
     with tarfile.open(sdist) as archive:
         names = {name.split("/", 1)[-1] for name in archive.getnames()}
-        required = {"README.md", "CHANGELOG.md", "mkdocs.yml", "docs/index.md"}
+        required = {"README.md", "CHANGELOG.md", "docs/docs.json", "docs/index.md"}
         missing = required - names
         if missing:
             raise SystemExit(f"Source distribution is missing: {sorted(missing)}")

@@ -4,7 +4,7 @@ from fastapi import Depends, FastAPI
 from fastapi.testclient import TestClient
 
 from typewall import w
-from typewall.fastapi import request_body
+from typewall.integrations.fastapi import request_body
 
 
 def test_fastapi_dependency_validates_request_body() -> None:

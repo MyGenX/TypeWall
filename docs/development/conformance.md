@@ -1,4 +1,7 @@
-# Integration Conformance Inventory
+---
+title: "Integration Conformance Inventory"
+description: "Capability scenarios and their verification targets"
+---
 
 | Capability scenario | Verification |
 | --- | --- |

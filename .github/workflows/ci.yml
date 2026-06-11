@@ -86,12 +86,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - run: npm ci
+        working-directory: docs
+      - run: npm run broken-links
+        working-directory: docs
       - uses: astral-sh/setup-uv@v6
         with:
           enable-cache: true
           python-version: "3.14"
       - run: uv sync --frozen --all-groups --all-extras --python 3.14
-      - run: uv run --frozen mkdocs build --strict
       - run: uv run --frozen pytest tests/conformance/test_examples.py
 
   benchmark:
