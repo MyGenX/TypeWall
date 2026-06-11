@@ -1,0 +1,105 @@
+name: PyPI Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+          python-version: "3.14"
+      - name: Verify release tag matches package version
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: |
+          uv sync --frozen --python 3.14
+          uv run --frozen python - <<'PY'
+          from pathlib import Path
+          import os
+          import tomllib
+
+          tag = os.environ["RELEASE_TAG"]
+          if tag.startswith("v"):
+              tag = tag[1:]
+          version = tomllib.loads(Path("pyproject.toml").read_text())["project"]["version"]
+          if version != tag:
+              raise SystemExit(
+                  f"release tag {os.environ['RELEASE_TAG']} does not match project version {version}"
+              )
+          PY
+      - name: Build release distributions
+        run: uv run --frozen python -m build
+      - name: Smoke test wheel and sdist
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          python -m venv /tmp/typewall-wheel
+          source /tmp/typewall-wheel/bin/activate
+          python -m pip install --upgrade pip
+          python -m pip install dist/*.whl
+          python - <<'PY'
+          from typewall import w
+
+          assert w.str().parse("ok") == "ok"
+          PY
+          deactivate
+
+          python -m venv /tmp/typewall-sdist
+          source /tmp/typewall-sdist/bin/activate
+          python -m pip install --upgrade pip
+          python -m pip install dist/*.tar.gz
+          python - <<'PY'
+          from typewall import w
+
+          assert w.int().parse(5) == 5
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-dist
+          path: dist/
+          if-no-files-found: error
+
+  publish-testpypi:
+    if: ${{ github.event.release.prerelease }}
+    needs: build
+    runs-on: ubuntu-latest
+    environment: testpypi
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: release-dist
+          path: dist
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
+          packages-dir: dist
+
+  publish-pypi:
+    if: ${{ !github.event.release.prerelease }}
+    needs: build
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      id-token: write
+      contents: read
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: release-dist
+          path: dist
+      - uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: dist
