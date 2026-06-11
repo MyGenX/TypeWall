@@ -1,0 +1,10 @@
+{
+  "include": [
+    "tests/typing/api.py",
+    "tests/typing/enhancements.py"
+  ],
+  "ignore": ["typewall"],
+  "exclude": ["tests/typing/negative.py"],
+  "pythonVersion": "3.9",
+  "typeCheckingMode": "strict"
+}

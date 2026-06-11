@@ -32,6 +32,8 @@ jobs:
       - run: uv run --frozen ruff format --check .
       - run: uv run --frozen ruff check .
       - run: uv run --frozen mypy
+      - run: uv run --frozen pyright
+      - run: uv run --frozen python tests/typing/check_negative.py
       - run: uv run --frozen pytest --cov=typewall --cov-report=term-missing
       - run: uv run --frozen python -m build
       - run: uv build --no-sources

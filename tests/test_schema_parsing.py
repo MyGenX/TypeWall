@@ -88,8 +88,19 @@ def test_sentinel_repr_is_stable_for_debugging() -> None:
 class BrokenSchema(Schema[str]):
     __slots__ = ()
 
-    def _parse(self, value: object, context: ParseContext) -> object:
+    def _parse_value(self, value: object, context: ParseContext) -> object:
         return INVALID
+
+
+class StringSlotSchema(Schema[str]):
+    __slots__ = "marker"
+
+    def __init__(self) -> None:
+        super().__init__()
+        object.__setattr__(self, "marker", "kept")
+
+    def _parse_value(self, value: object, context: ParseContext) -> object:
+        return value
 
 
 def test_schema_defensively_rejects_invalid_result_without_issue() -> None:
@@ -99,3 +110,8 @@ def test_schema_defensively_rejects_invalid_result_without_issue() -> None:
         schema.parse("value")
     with pytest.raises(RuntimeError, match="without a validation issue"):
         schema.safe_parse("value")
+
+
+def test_clone_supports_string_slot_declarations() -> None:
+    cloned = StringSlotSchema().optional()
+    assert cloned.marker == "kept"

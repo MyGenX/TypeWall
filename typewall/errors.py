@@ -19,6 +19,7 @@ class ValidationIssue:
     message: str
     expected: Optional[str] = None
     received_type: Optional[str] = None
+    branch_issues: Tuple[Tuple["ValidationIssue", ...], ...] = ()
 
 
 def issues_to_dict(issues: Iterable[ValidationIssue]) -> Dict[str, List[str]]:
