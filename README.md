@@ -1,13 +1,36 @@
-# TypeWall
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/logo/dark.svg">
+    <source media="(prefers-color-scheme: light)" srcset="docs/logo/light.svg">
+    <img alt="TypeWall" src="docs/logo/light.svg" width="280">
+  </picture>
+</p>
 
-Runtime type validation for Python with a small, schema-first API.
+<p align="center">
+  <a href="https://github.com/MyGenX/TypeWall"><img alt="GitHub stars" src="https://img.shields.io/github/stars/MyGenX/TypeWall?style=flat&logo=github&color=2563EB"></a>
+  <a href="https://pypi.org/project/typewall/"><img alt="PyPI version" src="https://img.shields.io/pypi/v/typewall?color=2563EB"></a>
+  <a href="https://pypi.org/project/typewall/"><img alt="Python versions" src="https://img.shields.io/pypi/pyversions/typewall?color=2563EB"></a>
+  <a href="https://github.com/MyGenX/TypeWall/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/github/license/MyGenX/TypeWall?color=2563EB"></a>
+  <a href="https://github.com/MyGenX/TypeWall/actions/workflows/ci.yml"><img alt="CI" src="https://img.shields.io/github/actions/workflow/status/MyGenX/TypeWall/ci.yml?branch=main&label=CI"></a>
+</p>
+
+TypeWall is a lightweight, schema-first runtime validation library for Python 3.9 through 3.14. It provides strict parsing, deterministic structured errors, immutable schemas, composition, custom processing, type-derived schemas, boundary adapters, and optional FastAPI integration.
+
+## Installation
+
+```shell
+pip install typewall
+pip install "typewall[fastapi]"  # optional FastAPI integration
+```
+
+## Quick Start
 
 ```python
 from typewall import w
 
 User = w.object({
-    "name": w.str(),
-    "age": w.int().optional(),
+    "name": w.str().min(2),
+    "age": w.int().min(0).optional(),
     "tags": w.list(w.str()).default([]),
 })
 
@@ -15,130 +38,50 @@ user = User.parse({"name": "Ada"})
 assert user == {"name": "Ada", "tags": []}
 ```
 
-Use `safe_parse()` when validation failures should be returned instead of raised:
+TypeWall is strict: it does not coerce `"42"` into `42`. Use explicit boundary adapters such as `parse_env()` when text conversion is required.
+
+## Error Inspection
 
 ```python
 result = User.safe_parse({"name": 42})
-
 if not result.ok:
-    print(result.to_dict())
+    for issue in result.errors:
+        print(issue.path, issue.code, issue.message)
 ```
 
-TypeWall supports strict string, integer, float, boolean, object, and list schemas;
-required, optional, and defaulted fields; constraints, composition, transforms,
-type-derived schemas, and structured validation errors. It does not coerce values.
-Schema export, environment parsing, CLI tools, and framework integrations are
-intentionally deferred to later phases.
+`parse()` raises one `ValidationError` containing every independently reachable issue. `safe_parse()` returns the same ordered issues without raising.
 
-## MVP Public API
+## Integrations
 
-- Builders: `w`, `tw`, and `SchemaBuilder`
-- Schemas: `Schema`, `StringSchema`, `IntegerSchema`, `FloatSchema`,
-  `BooleanSchema`, `ObjectSchema`, and `ListSchema`
-- Parsing: `Schema.parse()` and `Schema.safe_parse()`
-- Field configuration: `Schema.optional()` and `Schema.default()`
-- Results and errors: `ParseResult`, `ValidationIssue`, and `ValidationError`
+- JSON Schema 2020-12: `to_json_schema(schema)`
+- OpenAPI 3.1 schema objects: `to_openapi_schema(schema)`
+- Environment mappings: `ObjectSchema.parse_env()`
+- CLI: `typewall validate module:attribute [path|-]`
+- FastAPI: `typewall.integrations.fastapi.request_body()`
 
-MVP object schemas reject unknown keys, omit absent optional fields, defensively
-copy defaults, and aggregate independently reachable issues in deterministic order.
-The error dictionary uses `$` for root failures and dot-delimited paths for nested
-fields and list indexes.
-
-## Constraints
-
-```python
-Account = w.object({
-    "name": w.str().min(2).max(80),
-    "email": w.str().email(),
-    "homepage": w.str().url().optional(),
-    "age": w.int().min(18),
-})
-```
-
-String constraints include length, email, URL, UUID, and regex validation. Integer
-and float schemas support inclusive ranges plus positive and negative checks.
-Constraint declarations are available as immutable `schema.rules`; each rule exposes
-stable `metadata` for the later schema-export phase.
-
-## Composition
-
-```python
-Identifier = w.union((w.int(), w.str().uuid()))
-Coordinates = w.tuple((w.float(), w.float()))
-Labels = w.dict(w.str(), w.int())
-Role = w.enum(["admin", "user"])
-```
-
-TypeWall also provides literals, intersections, nullable schemas, `w.any()`, and
-`w.none()`. Union failures retain per-branch issues, and transformed dictionary keys
-cannot silently overwrite an existing parsed key.
-
-## Custom Processing
-
-```python
-NormalizedName = (
-    w.str()
-    .refine(str.strip, "Name must not be empty", code="empty_name")
-    .transform(str.strip)
-)
-```
-
-Refinements run after built-in validation. Transforms run only after every validation
-and refinement succeeds. These callbacks are runtime behavior and cannot be exported
-accurately as JSON Schema without explicit metadata in a future integration phase.
-
-## Python Types
-
-```python
-from dataclasses import dataclass
-from typing import TypedDict
-
-from typewall import schema_from_type
-
-
-class UserInput(TypedDict):
-    name: str
-    age: int
-
-
-@dataclass
-class User:
-    name: str
-    age: int = 18
-
-
-InputSchema = schema_from_type(UserInput)
-UserSchema = schema_from_type(User)
-```
-
-`schema_from_type()` supports primitives, `Any`, `None`, lists, dictionaries, fixed
-tuples, unions, optionals, literals, TypedDict declarations, dataclasses, and supported
-recursive declarations. Unsupported annotations fail during schema construction with
-the annotation path.
-
-## Typing Contract
-
-MyPy and Pyright verify the same conservative output-type contract. Primitive,
-collection, literal, tuple, union, nullable, transformed, and dataclass-derived schemas
-preserve their parsed output types. Manually declared `w.object()` schemas currently
-return `dict[str, Any]`; exact dictionary-shape inference is deferred.
-
-## Export Metadata
-
-Constraint rules expose serializable metadata. Composition schemas expose their
-declared literals, enum values, item schemas, members, or wrapped schema. Custom
-refinements and transforms contain arbitrary Python callbacks and must be treated as
-non-representable by schema exporters unless a later API supplies explicit metadata.
+See the [documentation](docs/index.md), [guides](docs/guides/), and [runnable examples](examples/). The documentation site is a self-contained [Mintlify](https://mintlify.com) project under `docs/`; preview it locally with `cd docs && npm install && npm run dev`. Development and benchmark commands are documented in the [contributing guide](docs/development/contributing-guide.md).
 
 ## Development
 
-TypeWall uses `uv` and supports CPython 3.9 through 3.14.
-
 ```shell
-UV_CACHE_DIR=.uv-cache uv sync --python 3.14
-UV_CACHE_DIR=.uv-cache uv run pytest
-UV_CACHE_DIR=.uv-cache uv run ruff check .
-UV_CACHE_DIR=.uv-cache uv run mypy
-UV_CACHE_DIR=.uv-cache uv run pyright
-UV_CACHE_DIR=.uv-cache uv run python tests/typing/check_negative.py
+uv sync --all-groups --all-extras --python 3.14
+uv run pytest
+uv run ruff format --check .
+uv run ruff check .
+uv run mypy
+uv run pyright
+uv run pytest benchmarks --benchmark-only
 ```
+
+## Contributing
+
+Contributions go through a fork-based pull request workflow:
+
+1. **Fork** [`MyGenX/TypeWall`](https://github.com/MyGenX/TypeWall) to your account.
+2. **Work** on a feature branch in your fork, running the local checks above.
+3. **Open a PR** from your branch against `MyGenX/TypeWall:main`.
+4. Address review feedback and **get it merged**.
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) and the [contributing guide](docs/development/contributing-guide.md) for the full workflow and required checks.
+
+TypeWall is distributed under the MIT license.

@@ -38,6 +38,14 @@ jobs:
           PY
       - name: Build release distributions
         run: uv run --frozen python -m build
+      - name: Verify release artifacts and dependency boundaries
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: |
+          uv run --frozen python scripts/verify_release.py \
+            --tag "$RELEASE_TAG" --wheel dist/*.whl --sdist dist/*.tar.gz \
+            --hashes dist/SHA256SUMS
+          uv run --frozen python scripts/check_base_dependencies.py dist/*.whl
       - name: Smoke test wheel and sdist
         shell: bash
         run: |

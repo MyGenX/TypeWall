@@ -1,5 +1,10 @@
-from .builder import SchemaBuilder, tw, w
-from .composition import (
+from importlib.metadata import version
+
+from .adapters.export import SchemaExportError, to_json_schema, to_openapi_schema
+from .core.errors import ValidationError, ValidationIssue
+from .core.schema import ParseResult, Schema
+from .schemas.builder import SchemaBuilder, tw, w
+from .schemas.composition import (
     AnySchema,
     DictSchema,
     EnumSchema,
@@ -10,12 +15,12 @@ from .composition import (
     TupleSchema,
     UnionSchema,
 )
-from .constraints import ConstraintRule
-from .errors import ValidationError, ValidationIssue
-from .primitives import BooleanSchema, FloatSchema, IntegerSchema, StringSchema
-from .schema import ParseResult, Schema
-from .structured import ListSchema, ObjectSchema
-from .typing import DataclassSchema, schema_from_type
+from .schemas.constraints import ConstraintRule
+from .schemas.primitives import BooleanSchema, FloatSchema, IntegerSchema, StringSchema
+from .schemas.structured import ListSchema, ObjectSchema
+from .schemas.typing import DataclassSchema, schema_from_type
+
+__version__ = version("typewall")
 
 __all__ = [
     "AnySchema",
@@ -35,12 +40,16 @@ __all__ = [
     "ParseResult",
     "Schema",
     "SchemaBuilder",
+    "SchemaExportError",
     "StringSchema",
     "TupleSchema",
     "UnionSchema",
     "ValidationError",
     "ValidationIssue",
+    "__version__",
     "schema_from_type",
+    "to_json_schema",
+    "to_openapi_schema",
     "tw",
     "w",
 ]

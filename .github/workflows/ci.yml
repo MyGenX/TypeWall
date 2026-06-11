@@ -5,6 +5,22 @@ on:
   pull_request:
 
 jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+          python-version: "3.14"
+      - run: uv sync --frozen --all-groups --all-extras --python 3.14
+      - run: uv run --frozen ruff format --check .
+      - run: uv run --frozen ruff check .
+      - run: uv run --frozen mypy
+      - run: uv run --frozen pyright
+      - run: uv run --frozen python tests/typing/check_negative.py
+      - run: uv run --frozen pytest --ignore=tests/distribution --cov=typewall --cov-branch --cov-report=term-missing
+
   test:
     runs-on: ubuntu-latest
     strategy:
@@ -17,10 +33,74 @@ jobs:
         with:
           enable-cache: true
           python-version: ${{ matrix.python-version }}
-      - run: uv sync --frozen --python ${{ matrix.python-version }}
-      - run: uv run --frozen --python ${{ matrix.python-version }} pytest
+      - run: uv sync --frozen --all-groups --all-extras --python ${{ matrix.python-version }}
+      - run: uv run --frozen --python ${{ matrix.python-version }} pytest tests/unit tests/property tests/integration tests/conformance
 
-  quality:
+  package:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13", "3.14"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+          python-version: ${{ matrix.python-version }}
+      - run: uv sync --frozen --all-groups --all-extras --python ${{ matrix.python-version }}
+      - run: uv run --frozen --python ${{ matrix.python-version }} python -m build
+      - run: uv run --frozen --python ${{ matrix.python-version }} pytest tests/distribution
+      - run: uv run --frozen --python ${{ matrix.python-version }} python scripts/check_base_dependencies.py dist/*.whl
+      - run: uv run --frozen --python ${{ matrix.python-version }} python scripts/verify_release.py --wheel dist/*.whl --sdist dist/*.tar.gz --hashes dist/SHA256SUMS
+
+  fastapi-compatibility:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - python-version: "3.9"
+            fastapi-version: "0.115.*"
+            client-package: "httpx>=0.27"
+          - python-version: "3.14"
+            fastapi-version: "0.115.*"
+            client-package: "httpx>=0.27"
+          - python-version: "3.9"
+            fastapi-version: "0.128.*"
+            client-package: "httpx>=0.27"
+          - python-version: "3.14"
+            fastapi-version: "0.136.*"
+            client-package: "httpx2"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+          python-version: ${{ matrix.python-version }}
+      - run: uv sync --frozen --all-groups --all-extras --python ${{ matrix.python-version }}
+      - run: uv pip install --python .venv/bin/python "fastapi==${{ matrix.fastapi-version }}" "${{ matrix.client-package }}"
+      - run: uv run --no-sync --python ${{ matrix.python-version }} pytest tests/integration/test_fastapi_integration.py tests/conformance/test_cross_feature.py
+
+  documentation:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - run: npm ci
+        working-directory: docs
+      - run: npm run broken-links
+        working-directory: docs
+      - uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+          python-version: "3.14"
+      - run: uv sync --frozen --all-groups --all-extras --python 3.14
+      - run: uv run --frozen pytest tests/conformance/test_examples.py
+
+  benchmark:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -28,12 +108,11 @@ jobs:
         with:
           enable-cache: true
           python-version: "3.14"
-      - run: uv sync --frozen --python 3.14
-      - run: uv run --frozen ruff format --check .
-      - run: uv run --frozen ruff check .
-      - run: uv run --frozen mypy
-      - run: uv run --frozen pyright
-      - run: uv run --frozen python tests/typing/check_negative.py
-      - run: uv run --frozen pytest --cov=typewall --cov-report=term-missing
-      - run: uv run --frozen python -m build
-      - run: uv build --no-sources
+      - run: uv sync --frozen --all-groups --all-extras --python 3.14
+      - run: mkdir -p benchmark-results
+      - run: uv run --frozen pytest benchmarks --benchmark-only --benchmark-json=benchmark-results/results.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: benchmark-results
+          path: benchmark-results/results.json
+          if-no-files-found: error

@@ -1,0 +1,73 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "TypeWall",
+  "description": "Strict schema-first runtime validation for Python",
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg"
+  },
+  "favicon": "/favicon.svg",
+  "colors": {
+    "primary": "#2563EB",
+    "light": "#60A5FA",
+    "dark": "#1D4ED8"
+  },
+  "navigation": {
+    "versions": [
+      {
+        "version": "latest",
+        "groups": [
+          {
+            "group": "Home",
+            "pages": [
+              "index",
+              "getting-started",
+              "errors"
+            ]
+          },
+          {
+            "group": "Guides",
+            "pages": [
+              "guides/constraints",
+              "guides/composition",
+              "guides/custom-processing",
+              "guides/typing",
+              "guides/environment",
+              "guides/cli",
+              "guides/export",
+              "guides/fastapi"
+            ]
+          },
+          {
+            "group": "API Reference",
+            "pages": [
+              "reference/api"
+            ]
+          },
+          {
+            "group": "Development",
+            "pages": [
+              "development/contributing-guide",
+              "development/benchmarks",
+              "development/conformance"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "GitHub",
+        "href": "https://github.com/MyGenX/TypeWall"
+      }
+    ]
+  },
+  "footer": {
+    "socials": {
+      "github": "https://github.com/MyGenX/TypeWall"
+    }
+  }
+}

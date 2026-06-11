@@ -46,8 +46,12 @@ htmlcov/
 .tox/
 .nox/
 .benchmarks/
-site/
-docs/_build/
+benchmark-results/
+
+# Documentation (Mintlify / Node) build output
+docs/node_modules/
+.mintlify/
+.mint/
 
 # Linters, type checkers, and language servers
 .ruff_cache/

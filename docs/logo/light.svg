@@ -1,0 +1,20 @@
+<svg width="160" height="48" viewBox="0 0 150 48" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="TypeWall">
+  <!-- Brick-wall mark -->
+  <rect x="0" y="4" width="40" height="40" rx="9" fill="#2563EB"/>
+  <g fill="#FFFFFF">
+    <!-- row 1 -->
+    <rect x="7"  y="11" width="11" height="6" rx="1.5"/>
+    <rect x="20" y="11" width="13" height="6" rx="1.5"/>
+    <!-- row 2 (offset) -->
+    <rect x="7"  y="19" width="6"  height="6" rx="1.5"/>
+    <rect x="15" y="19" width="13" height="6" rx="1.5"/>
+    <rect x="30" y="19" width="3"  height="6" rx="1.5"/>
+    <!-- row 3 -->
+    <rect x="7"  y="27" width="11" height="6" rx="1.5"/>
+    <rect x="20" y="27" width="13" height="6" rx="1.5"/>
+  </g>
+  <!-- Wordmark -->
+  <text x="52" y="32" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="24" font-weight="700" letter-spacing="-0.5">
+    <tspan fill="#0F172A">Type</tspan><tspan fill="#2563EB">Wall</tspan>
+  </text>
+</svg>
