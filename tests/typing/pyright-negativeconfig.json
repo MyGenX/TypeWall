@@ -1,0 +1,6 @@
+{
+  "include": ["negative.py"],
+  "ignore": ["../../typewall"],
+  "pythonVersion": "3.9",
+  "typeCheckingMode": "strict"
+}

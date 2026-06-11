@@ -28,7 +28,7 @@ class ObjectSchema(Schema[Dict[str, Any]]):
             copied[key] = schema
         object.__setattr__(self, "fields", MappingProxyType(copied))
 
-    def _parse(self, value: Any, context: ParseContext) -> Any:
+    def _parse_value(self, value: Any, context: ParseContext) -> Any:
         if not isinstance(value, Mapping):
             _type_error(context, "mapping", value)
             return INVALID
@@ -86,7 +86,7 @@ class ListSchema(Schema[List[T]], Generic[T]):
         super().__init__()
         object.__setattr__(self, "item_schema", item_schema)
 
-    def _parse(self, value: Any, context: ParseContext) -> Any:
+    def _parse_value(self, value: Any, context: ParseContext) -> Any:
         if not isinstance(value, list):
             _type_error(context, "list", value)
             return INVALID

@@ -25,7 +25,10 @@ classifiers = [
   "Programming Language :: Python :: 3.14",
   "Typing :: Typed",
 ]
-dependencies = []
+dependencies = [
+  "email-validator>=2.2,<3",
+  "typing-extensions>=4.10",
+]
 
 [dependency-groups]
 dev = [
@@ -34,6 +37,7 @@ dev = [
   "mypy>=1.11,<2",
   "pytest>=8.3,<9",
   "pytest-cov>=6.0",
+  "pyright>=1.1.400",
   "ruff>=0.11",
 ]
 
@@ -59,7 +63,7 @@ skip_covered = true
 [tool.mypy]
 python_version = "3.9"
 strict = true
-files = ["typewall", "tests/typing"]
+files = ["typewall", "tests/typing/api.py", "tests/typing/enhancements.py"]
 show_error_codes = true
 warn_unreachable = true
 

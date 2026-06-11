@@ -15,6 +15,7 @@ context: |
   Quality gates: formatting, linting, static typing, unit/property tests, coverage,
   package builds, clean-wheel installation, and the supported-Python matrix.
   Delivery is phased: core MVP, validation enhancements, then integrations/release.
+  Validation enhancements cover constraints, composition, custom processing, and typing integration.
 
 rules:
   proposal:
