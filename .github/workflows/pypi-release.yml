@@ -74,7 +74,9 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: release-dist
-          path: dist/
+          path: |
+            dist/*.whl
+            dist/*.tar.gz
           if-no-files-found: error
 
   publish-testpypi:
