@@ -9,6 +9,7 @@ from jsonschema import Draft202012Validator
 from typewall import (
     Schema,
     SchemaExportError,
+    inline_refs,
     schema_from_type,
     to_json_schema,
     to_openapi_schema,
@@ -140,6 +141,47 @@ def test_export_rejects_refinements_and_unknown_schema_types() -> None:
 
     with pytest.raises(SchemaExportError, match="Unsupported schema type"):
         to_json_schema(UnknownSchema())
+
+
+def test_inline_refs_produces_self_contained_schema() -> None:
+    schema = w.object(
+        {
+            "name": w.str(),
+            "members": w.list(w.int().positive()).default([]),
+        }
+    )
+    inlined = to_openapi_schema(schema, inline=True)
+
+    Draft202012Validator.check_schema(inlined)
+    assert "$ref" not in inlined
+    assert "$defs" not in inlined
+    assert inlined["type"] == "object"
+    # Nested composite (list) is inlined too, and the field default is preserved.
+    assert inlined["properties"]["members"] == {
+        "type": "array",
+        "items": {"type": "integer", "exclusiveMinimum": 0},
+        "default": [],
+    }
+
+
+def test_inline_refs_default_export_is_unchanged() -> None:
+    # The non-inline default still uses $defs/$ref (callers may rely on it).
+    document = to_openapi_schema(w.object({"name": w.str()}))
+    assert document["$ref"] == "#/$defs/schema_1"
+    assert inline_refs(document) == {
+        "type": "object",
+        "properties": {"name": {"type": "string"}},
+        "required": ["name"],
+        "additionalProperties": False,
+    }
+
+
+def test_inline_refs_rejects_recursive_schema() -> None:
+    document = to_openapi_schema(schema_from_type(RecursiveNode))
+    with pytest.raises(SchemaExportError, match="recursive schema reference"):
+        inline_refs(document)
+    with pytest.raises(SchemaExportError, match="recursive schema reference"):
+        to_openapi_schema(schema_from_type(RecursiveNode), inline=True)
 
 
 def test_export_metadata_is_copied_and_requires_a_mapping() -> None:

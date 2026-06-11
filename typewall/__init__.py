@@ -1,6 +1,11 @@
 from importlib.metadata import version
 
-from .adapters.export import SchemaExportError, to_json_schema, to_openapi_schema
+from .adapters.export import (
+    SchemaExportError,
+    inline_refs,
+    to_json_schema,
+    to_openapi_schema,
+)
 from .core.errors import ValidationError, ValidationIssue
 from .core.schema import ParseResult, Schema
 from .schemas.builder import SchemaBuilder, tw, w
@@ -47,6 +52,7 @@ __all__ = [
     "ValidationError",
     "ValidationIssue",
     "__version__",
+    "inline_refs",
     "schema_from_type",
     "to_json_schema",
     "to_openapi_schema",

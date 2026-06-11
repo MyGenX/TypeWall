@@ -33,7 +33,7 @@ class ValidatedBody:
                 "required": True,
                 "content": {
                     "application/json": {
-                        "schema": to_openapi_schema(self.schema),
+                        "schema": to_openapi_schema(self.schema, inline=True),
                     }
                 },
             }

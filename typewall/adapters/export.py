@@ -249,5 +249,49 @@ def to_json_schema(schema: Schema[Any]) -> Dict[str, Any]:
     return _Exporter(openapi=False).export(schema)
 
 
-def to_openapi_schema(schema: Schema[Any]) -> Dict[str, Any]:
-    return _Exporter(openapi=True).export(schema)
+def to_openapi_schema(schema: Schema[Any], *, inline: bool = False) -> Dict[str, Any]:
+    document = _Exporter(openapi=True).export(schema)
+    if inline:
+        return inline_refs(document)
+    return document
+
+
+def _inline_node(
+    node: Any, defs: Dict[str, Any], stack: Tuple[str, ...]
+) -> Any:
+    if isinstance(node, dict):
+        ref = node.get("$ref")
+        if isinstance(ref, str) and ref.startswith("#/$defs/"):
+            name = ref.rsplit("/", 1)[-1]
+            if name in stack:
+                raise SchemaExportError(
+                    f"Cannot inline recursive schema reference {ref!r}; "
+                    "recursive schemas require the non-inline export"
+                )
+            if name not in defs:
+                raise SchemaExportError(f"Unresolved schema reference {ref!r}")
+            resolved = _inline_node(defs[name], defs, (*stack, name))
+            # Sibling keys (e.g. an object field's ``default``) override the definition.
+            for key, value in node.items():
+                if key != "$ref":
+                    resolved[key] = _inline_node(value, defs, stack)
+            return resolved
+        return {key: _inline_node(value, defs, stack) for key, value in node.items()}
+    if isinstance(node, list):
+        return [_inline_node(item, defs, stack) for item in node]
+    return node
+
+
+def inline_refs(document: Dict[str, Any]) -> Dict[str, Any]:
+    """Resolve a document's ``#/$defs/...`` references into a self-contained schema.
+
+    The exporter names every composite sub-schema under a top-level ``$defs`` and
+    points at it with ``$ref``. Embedded under an OpenAPI path's ``requestBody`` those
+    refs resolve against the OpenAPI document root (which has no ``$defs``), so tools
+    like Swagger UI fail to dereference them. Inlining produces a flat, self-contained
+    schema with no ``$ref``/``$defs``. Raises ``SchemaExportError`` for recursive
+    schemas, which cannot be fully inlined.
+    """
+    working = deepcopy(document)
+    defs = working.pop("$defs", {})
+    return cast(Dict[str, Any], _inline_node(working, defs, ()))

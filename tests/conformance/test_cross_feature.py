@@ -67,4 +67,7 @@ def test_fastapi_openapi_uses_exported_schema() -> None:
     assert client.post("/users", json={"name": "Ada"}).json()["age"] == 18
     operation = app.openapi()["paths"]["/users"]["post"]
     request_schema = operation["requestBody"]["content"]["application/json"]["schema"]
-    assert "$defs" in request_schema
+    # Schema is inlined so it resolves against the OpenAPI root in Swagger UI.
+    assert "$defs" not in request_schema
+    assert "$ref" not in request_schema
+    assert request_schema["properties"]["age"] == {"type": "integer", "default": 18}

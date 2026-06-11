@@ -55,7 +55,15 @@ def test_fastapi_dependency_contributes_openapi_schema() -> None:
     schema = openapi["paths"]["/users"]["post"]["requestBody"]["content"][
         "application/json"
     ]["schema"]
-    assert schema["$ref"] == "#/$defs/schema_1"
+    # The embedded schema must be self-contained: a $ref to "#/$defs/..." would
+    # resolve against the OpenAPI document root (which has no $defs) and break
+    # Swagger UI. It is inlined instead.
+    assert "$ref" not in schema
+    assert "$defs" not in schema
+    assert schema["type"] == "object"
+    assert schema["properties"]["name"] == {"type": "string"}
+    assert schema["properties"]["age"] == {"type": "integer"}
+    assert sorted(schema["required"]) == ["age", "name"]
 
 
 def test_fastapi_dependency_rejects_malformed_json() -> None:
