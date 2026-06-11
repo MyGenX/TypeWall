@@ -256,9 +256,7 @@ def to_openapi_schema(schema: Schema[Any], *, inline: bool = False) -> Dict[str,
     return document
 
 
-def _inline_node(
-    node: Any, defs: Dict[str, Any], stack: Tuple[str, ...]
-) -> Any:
+def _inline_node(node: Any, defs: Dict[str, Any], stack: Tuple[str, ...]) -> Any:
     if isinstance(node, dict):
         ref = node.get("$ref")
         if isinstance(ref, str) and ref.startswith("#/$defs/"):
