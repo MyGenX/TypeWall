@@ -46,8 +46,10 @@ htmlcov/
 .tox/
 .nox/
 .benchmarks/
+benchmark-results/
 site/
 docs/_build/
+.mkdocs_cache/
 
 # Linters, type checkers, and language servers
 .ruff_cache/

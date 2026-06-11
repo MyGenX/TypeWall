@@ -5,7 +5,7 @@ import typewall
 
 
 def test_installed_distribution_metadata_and_import() -> None:
-    assert version("typewall") == "0.1.0"
+    assert version("typewall") == typewall.__version__
     assert metadata("typewall")["Requires-Python"] == ">=3.9"
     assert typewall.w.str().parse("installed") == "installed"
 

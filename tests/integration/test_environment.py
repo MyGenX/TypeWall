@@ -1,6 +1,8 @@
+from typing import Any
+
 import pytest
 
-from typewall import w
+from typewall import Schema, ValidationError, w
 
 
 def test_parse_env_uses_only_the_supplied_mapping(
@@ -84,3 +86,56 @@ def test_parse_env_reports_secret_like_values_without_echoing_them() -> None:
     assert secret not in str(result.errors[0])
     assert result.errors[0].path == ("age",)
     assert result.errors[0].code == "invalid_env_value"
+
+
+@pytest.mark.parametrize(
+    ("schema", "raw"),
+    [
+        (w.str(), 1),
+        (w.bool(), 1),
+        (w.int(), 1),
+        (w.int(), "1 2"),
+        (w.int(), "invalid"),
+        (w.float(), 1.0),
+        (w.float(), "invalid"),
+        (w.none(), 1),
+        (w.none(), "value"),
+    ],
+)
+def test_parse_env_rejects_invalid_scalar_forms(
+    schema: Schema[Any], raw: object
+) -> None:
+    with pytest.raises(ValidationError):
+        w.object({"VALUE": schema}).parse_env({"VALUE": raw})
+
+
+@pytest.mark.parametrize(
+    ("schema", "raw", "expected"),
+    [
+        (w.float(), "1.5", 1.5),
+        (w.none(), "null", None),
+        (w.any(), "unchanged", "unchanged"),
+        (w.list(w.int()), [1, 2], [1, 2]),
+    ],
+)
+def test_parse_env_additional_valid_forms(
+    schema: Schema[Any], raw: object, expected: object
+) -> None:
+    assert w.object({"VALUE": schema}).parse_env({"VALUE": raw}) == {"VALUE": expected}
+
+
+@pytest.mark.parametrize(
+    ("schema", "raw"),
+    [
+        (w.list(w.int()), "{}"),
+        (w.tuple((w.int(),)), "{}"),
+        (w.dict(w.str(), w.int()), "[]"),
+        (w.object({"name": w.str()}), "[]"),
+        (w.list(w.int()), "not-json"),
+    ],
+)
+def test_parse_env_rejects_invalid_structured_json(
+    schema: Schema[Any], raw: str
+) -> None:
+    with pytest.raises(ValidationError):
+        w.object({"VALUE": schema}).parse_env({"VALUE": raw})

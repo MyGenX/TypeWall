@@ -16,6 +16,8 @@ context: |
   package builds, clean-wheel installation, and the supported-Python matrix.
   Delivery is phased: core MVP, validation enhancements, then integrations/release.
   Validation enhancements cover constraints, composition, custom processing, and typing integration.
+  Project hardening covers layered package structure, documentation, examples, benchmarks,
+  conformance tests, package verification, and CI before external publication.
 
 rules:
   proposal:

@@ -12,6 +12,7 @@ license = "MIT"
 license-files = ["LICENSE"]
 authors = [{ name = "TypeWall contributors" }]
 keywords = ["validation", "schema", "runtime-types", "parsing"]
+urls = { Homepage = "https://github.com/MyGenX/TypeWall", Documentation = "https://mygenx.github.io/TypeWall/", Repository = "https://github.com/MyGenX/TypeWall", Issues = "https://github.com/MyGenX/TypeWall/issues", Changelog = "https://github.com/MyGenX/TypeWall/blob/main/CHANGELOG.md" }
 classifiers = [
   "Development Status :: 3 - Alpha",
   "Intended Audience :: Developers",
@@ -31,20 +32,28 @@ dependencies = [
 ]
 
 [project.scripts]
-typewall = "typewall.cli:main"
+typewall = "typewall.adapters.cli:main"
 
 [project.optional-dependencies]
 fastapi = ["fastapi>=0.115,<1"]
 cli = []
-docs = []
+docs = [
+  "mike>=2,<3",
+  "mkdocs-material>=9.5,<10",
+  "mkdocstrings[python]>=0.27,<1",
+]
 
 [dependency-groups]
 test = [
   "fastapi>=0.115,<1",
+  "hatchling==1.27.*",
   "httpx>=0.27",
   "jsonschema>=4.23",
   "pytest>=8.3,<9",
   "pytest-cov>=6.0",
+]
+benchmark = [
+  "pytest-benchmark>=5,<6",
 ]
 dev = [
   "build>=1.3",
@@ -54,21 +63,58 @@ dev = [
   "httpx>=0.27",
   "pyright>=1.1.400",
   "ruff>=0.11",
+  "tomli>=2; python_version < '3.11'",
 ]
 
 [tool.hatch.build.targets.wheel]
 packages = ["typewall"]
 
 [tool.hatch.build.targets.sdist]
-include = ["/typewall", "/README.md", "/LICENSE", "/pyproject.toml"]
+include = [
+  "/typewall",
+  "/tests",
+  "/docs",
+  "/examples",
+  "/benchmarks",
+  "/scripts",
+  "/README.md",
+  "/CHANGELOG.md",
+  "/LICENSE",
+  "/mkdocs.yml",
+  "/pyproject.toml",
+]
 
 [tool.pytest.ini_options]
 addopts = ["-ra", "--strict-config", "--strict-markers"]
 testpaths = ["tests"]
+markers = [
+  "unit: focused schema and core behavior tests",
+  "property: property-based invariant tests",
+  "integration: adapter and framework integration tests",
+  "conformance: cross-feature specification conformance tests",
+  "distribution: built-package and metadata tests",
+  "typing: static typing fixture checks",
+]
 
 [tool.coverage.run]
 branch = true
 source = ["typewall"]
+omit = [
+  "typewall/_context.py",
+  "typewall/_sentinels.py",
+  "typewall/builder.py",
+  "typewall/cli.py",
+  "typewall/composition.py",
+  "typewall/constraints.py",
+  "typewall/environment.py",
+  "typewall/errors.py",
+  "typewall/export.py",
+  "typewall/fastapi.py",
+  "typewall/primitives.py",
+  "typewall/schema.py",
+  "typewall/structured.py",
+  "typewall/typing.py",
+]
 
 [tool.coverage.report]
 fail_under = 95
@@ -81,6 +127,17 @@ strict = true
 files = ["typewall", "tests/typing/api.py", "tests/typing/enhancements.py"]
 show_error_codes = true
 warn_unreachable = true
+
+[[tool.mypy.overrides]]
+module = [
+  "click",
+  "click.*",
+  "fastapi",
+  "fastapi.*",
+  "starlette",
+  "starlette.*",
+]
+follow_imports = "skip"
 
 [tool.ruff]
 target-version = "py39"

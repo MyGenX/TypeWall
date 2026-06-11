@@ -56,3 +56,19 @@ def test_fastapi_dependency_contributes_openapi_schema() -> None:
         "application/json"
     ]["schema"]
     assert schema["$ref"] == "#/$defs/schema_1"
+
+
+def test_fastapi_dependency_rejects_malformed_json() -> None:
+    app = FastAPI()
+    body = request_body(w.object({"name": w.str()}))
+
+    @app.post("/users")
+    async def create_user(payload=Depends(body)) -> dict[str, object]:  # noqa: B008
+        return payload
+
+    response = TestClient(app).post(
+        "/users", content="{", headers={"content-type": "application/json"}
+    )
+
+    assert response.status_code == 422
+    assert response.json()["detail"][0]["type"] == "value_error.json"
