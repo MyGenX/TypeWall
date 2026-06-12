@@ -269,6 +269,10 @@ def _inline_node(node: Any, defs: Dict[str, Any], stack: Tuple[str, ...]) -> Any
             if name not in defs:
                 raise SchemaExportError(f"Unresolved schema reference {ref!r}")
             resolved = _inline_node(defs[name], defs, (*stack, name))
+            if not isinstance(resolved, dict):
+                raise SchemaExportError(
+                    f"Cannot apply sibling keys to non-object schema reference {ref!r}"
+                )
             # Sibling keys (e.g. an object field's ``default``) override the definition.
             for key, value in node.items():
                 if key != "$ref":
