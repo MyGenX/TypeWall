@@ -70,10 +70,16 @@ class _Exporter:
             return self._inline(schema, path)
 
         if isinstance(schema, LazySchema):
-            resolved = schema.resolver()
-            if not isinstance(resolved, Schema) or resolved is schema:
+            if schema_id in self.visiting:
                 raise SchemaExportError("Recursive schema could not be resolved", path)
-            return self._visit(resolved, path)
+            self.visiting.add(schema_id)
+            try:
+                resolved = schema.resolver()
+                if not isinstance(resolved, Schema):
+                    raise SchemaExportError("Recursive schema could not be resolved", path)
+                return self._visit(resolved, path)
+            finally:
+                self.visiting.discard(schema_id)
 
         name = self._name(schema)
         self.names[schema_id] = name
