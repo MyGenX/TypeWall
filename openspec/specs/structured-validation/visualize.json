@@ -1,11 +1,13 @@
 {
   "type": "item",
   "id": "structured-validation",
-  "title": "structured-validation",
+  "title": "Structured Validation",
   "spec_type": "spec",
-  "status": "draft",
-  "owner": "",
+  "status": "implemented",
   "spec_file": "spec.md",
   "created_at": "2026-06-17",
-  "last_updated": "2026-06-17"
+  "last_updated": "2026-06-17",
+  "track": "spec",
+  "requirement_count": 7,
+  "scenario_count": 11
 }

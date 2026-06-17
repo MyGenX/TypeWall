@@ -3,9 +3,11 @@
   "id": "benchmark-suite",
   "title": "benchmark-suite",
   "spec_type": "spec",
-  "status": "draft",
-  "owner": "",
+  "status": "implemented",
   "spec_file": "spec.md",
   "created_at": "2026-06-17",
-  "last_updated": "2026-06-17"
+  "last_updated": "2026-06-17",
+  "track": "spec",
+  "requirement_count": 4,
+  "scenario_count": 4
 }

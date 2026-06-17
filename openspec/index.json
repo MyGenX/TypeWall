@@ -1,7 +1,7 @@
 {
   "meta": {
     "repo": "MyGenX/TypeWall",
-    "generated_at": "2026-06-17T08:14:30.679Z",
+    "generated_at": "2026-06-17T11:13:30.542Z",
     "openspec_version": "1.0.0",
     "visualizer_version": "1.0.0",
     "root": "openspec"
@@ -41,265 +41,412 @@
       "id": "benchmark-suite",
       "title": "benchmark-suite",
       "type": "spec",
-      "status": "draft",
+      "status": "implemented",
       "path": "openspec/specs/benchmark-suite",
       "spec_file": "openspec/specs/benchmark-suite/spec.md",
       "visualize": "openspec/specs/benchmark-suite/visualize.json",
       "archived": false,
-      "last_updated": "2026-06-17"
+      "last_updated": "2026-06-17",
+      "track": "spec",
+      "requirement_count": 4,
+      "scenario_count": 4
     },
     {
       "id": "custom-processing",
-      "title": "custom-processing",
+      "title": "Custom Processing",
       "type": "spec",
-      "status": "draft",
+      "status": "implemented",
       "path": "openspec/specs/custom-processing",
       "spec_file": "openspec/specs/custom-processing/spec.md",
       "visualize": "openspec/specs/custom-processing/visualize.json",
       "archived": false,
-      "last_updated": "2026-06-17"
+      "last_updated": "2026-06-17",
+      "track": "spec",
+      "requirement_count": 4,
+      "scenario_count": 6
     },
     {
       "id": "environment-parsing",
       "title": "environment-parsing",
       "type": "spec",
-      "status": "draft",
+      "status": "implemented",
       "path": "openspec/specs/environment-parsing",
       "spec_file": "openspec/specs/environment-parsing/spec.md",
       "visualize": "openspec/specs/environment-parsing/visualize.json",
       "archived": false,
-      "last_updated": "2026-06-17"
+      "last_updated": "2026-06-17",
+      "track": "spec",
+      "requirement_count": 5,
+      "scenario_count": 6
     },
     {
       "id": "fastapi-integration",
       "title": "fastapi-integration",
       "type": "spec",
-      "status": "draft",
+      "status": "implemented",
       "path": "openspec/specs/fastapi-integration",
       "spec_file": "openspec/specs/fastapi-integration/spec.md",
       "visualize": "openspec/specs/fastapi-integration/visualize.json",
       "archived": false,
-      "last_updated": "2026-06-17"
+      "last_updated": "2026-06-17",
+      "track": "spec",
+      "requirement_count": 4,
+      "scenario_count": 5
     },
     {
       "id": "integration-conformance",
       "title": "integration-conformance",
       "type": "spec",
-      "status": "draft",
+      "status": "implemented",
       "path": "openspec/specs/integration-conformance",
       "spec_file": "openspec/specs/integration-conformance/spec.md",
       "visualize": "openspec/specs/integration-conformance/visualize.json",
       "archived": false,
-      "last_updated": "2026-06-17"
+      "last_updated": "2026-06-17",
+      "track": "spec",
+      "requirement_count": 4,
+      "scenario_count": 4
     },
     {
       "id": "package-architecture",
       "title": "package-architecture",
       "type": "spec",
-      "status": "draft",
+      "status": "implemented",
       "path": "openspec/specs/package-architecture",
       "spec_file": "openspec/specs/package-architecture/spec.md",
       "visualize": "openspec/specs/package-architecture/visualize.json",
       "archived": false,
-      "last_updated": "2026-06-17"
+      "last_updated": "2026-06-17",
+      "track": "spec",
+      "requirement_count": 4,
+      "scenario_count": 4
     },
     {
       "id": "package-release",
       "title": "package-release",
       "type": "spec",
-      "status": "draft",
+      "status": "implemented",
       "path": "openspec/specs/package-release",
       "spec_file": "openspec/specs/package-release/spec.md",
       "visualize": "openspec/specs/package-release/visualize.json",
       "archived": false,
-      "last_updated": "2026-06-17"
+      "last_updated": "2026-06-17",
+      "track": "spec",
+      "requirement_count": 6,
+      "scenario_count": 8
     },
     {
       "id": "primitive-validation",
-      "title": "primitive-validation",
+      "title": "Primitive Validation",
       "type": "spec",
-      "status": "draft",
+      "status": "implemented",
       "path": "openspec/specs/primitive-validation",
       "spec_file": "openspec/specs/primitive-validation/spec.md",
       "visualize": "openspec/specs/primitive-validation/visualize.json",
       "archived": false,
-      "last_updated": "2026-06-17"
+      "last_updated": "2026-06-17",
+      "track": "spec",
+      "requirement_count": 4,
+      "scenario_count": 8
     },
     {
       "id": "project-documentation",
       "title": "project-documentation",
       "type": "spec",
-      "status": "draft",
+      "status": "implemented",
       "path": "openspec/specs/project-documentation",
       "spec_file": "openspec/specs/project-documentation/spec.md",
       "visualize": "openspec/specs/project-documentation/visualize.json",
       "archived": false,
-      "last_updated": "2026-06-17"
+      "last_updated": "2026-06-17",
+      "track": "spec",
+      "requirement_count": 4,
+      "scenario_count": 4
     },
     {
       "id": "project-organization",
       "title": "project-organization",
       "type": "spec",
-      "status": "draft",
+      "status": "implemented",
       "path": "openspec/specs/project-organization",
       "spec_file": "openspec/specs/project-organization/spec.md",
       "visualize": "openspec/specs/project-organization/visualize.json",
       "archived": false,
-      "last_updated": "2026-06-17"
+      "last_updated": "2026-06-17",
+      "track": "spec",
+      "requirement_count": 3,
+      "scenario_count": 3
     },
     {
       "id": "python-typing-integration",
-      "title": "python-typing-integration",
+      "title": "Python Typing Integration",
       "type": "spec",
-      "status": "draft",
+      "status": "implemented",
       "path": "openspec/specs/python-typing-integration",
       "spec_file": "openspec/specs/python-typing-integration/spec.md",
       "visualize": "openspec/specs/python-typing-integration/visualize.json",
       "archived": false,
-      "last_updated": "2026-06-17"
+      "last_updated": "2026-06-17",
+      "track": "spec",
+      "requirement_count": 6,
+      "scenario_count": 10
     },
     {
       "id": "quality-automation",
       "title": "quality-automation",
       "type": "spec",
-      "status": "draft",
+      "status": "implemented",
       "path": "openspec/specs/quality-automation",
       "spec_file": "openspec/specs/quality-automation/spec.md",
       "visualize": "openspec/specs/quality-automation/visualize.json",
       "archived": false,
-      "last_updated": "2026-06-17"
+      "last_updated": "2026-06-17",
+      "track": "spec",
+      "requirement_count": 5,
+      "scenario_count": 5
     },
     {
       "id": "schema-composition",
-      "title": "schema-composition",
+      "title": "Schema Composition",
       "type": "spec",
-      "status": "draft",
+      "status": "implemented",
       "path": "openspec/specs/schema-composition",
       "spec_file": "openspec/specs/schema-composition/spec.md",
       "visualize": "openspec/specs/schema-composition/visualize.json",
       "archived": false,
-      "last_updated": "2026-06-17"
+      "last_updated": "2026-06-17",
+      "track": "spec",
+      "requirement_count": 6,
+      "scenario_count": 13
     },
     {
       "id": "schema-export",
       "title": "schema-export",
       "type": "spec",
-      "status": "draft",
+      "status": "implemented",
       "path": "openspec/specs/schema-export",
       "spec_file": "openspec/specs/schema-export/spec.md",
       "visualize": "openspec/specs/schema-export/visualize.json",
       "archived": false,
-      "last_updated": "2026-06-17"
+      "last_updated": "2026-06-17",
+      "track": "spec",
+      "requirement_count": 4,
+      "scenario_count": 5
     },
     {
       "id": "schema-parsing",
-      "title": "schema-parsing",
+      "title": "Schema Parsing",
       "type": "spec",
-      "status": "draft",
+      "status": "implemented",
       "path": "openspec/specs/schema-parsing",
       "spec_file": "openspec/specs/schema-parsing/spec.md",
       "visualize": "openspec/specs/schema-parsing/visualize.json",
       "archived": false,
-      "last_updated": "2026-06-17"
+      "last_updated": "2026-06-17",
+      "track": "spec",
+      "requirement_count": 5,
+      "scenario_count": 8
     },
     {
       "id": "structured-validation",
-      "title": "structured-validation",
+      "title": "Structured Validation",
       "type": "spec",
-      "status": "draft",
+      "status": "implemented",
       "path": "openspec/specs/structured-validation",
       "spec_file": "openspec/specs/structured-validation/spec.md",
       "visualize": "openspec/specs/structured-validation/visualize.json",
       "archived": false,
-      "last_updated": "2026-06-17"
+      "last_updated": "2026-06-17",
+      "track": "spec",
+      "requirement_count": 7,
+      "scenario_count": 11
     },
     {
       "id": "validation-cli",
       "title": "validation-cli",
       "type": "spec",
-      "status": "draft",
+      "status": "implemented",
       "path": "openspec/specs/validation-cli",
       "spec_file": "openspec/specs/validation-cli/spec.md",
       "visualize": "openspec/specs/validation-cli/visualize.json",
       "archived": false,
-      "last_updated": "2026-06-17"
+      "last_updated": "2026-06-17",
+      "track": "spec",
+      "requirement_count": 5,
+      "scenario_count": 7
     },
     {
       "id": "validation-constraints",
-      "title": "validation-constraints",
+      "title": "Validation Constraints",
       "type": "spec",
-      "status": "draft",
+      "status": "implemented",
       "path": "openspec/specs/validation-constraints",
       "spec_file": "openspec/specs/validation-constraints/spec.md",
       "visualize": "openspec/specs/validation-constraints/visualize.json",
       "archived": false,
-      "last_updated": "2026-06-17"
+      "last_updated": "2026-06-17",
+      "track": "spec",
+      "requirement_count": 6,
+      "scenario_count": 12
     },
     {
       "id": "validation-errors",
-      "title": "validation-errors",
+      "title": "Validation Errors",
       "type": "spec",
-      "status": "draft",
+      "status": "implemented",
       "path": "openspec/specs/validation-errors",
       "spec_file": "openspec/specs/validation-errors/spec.md",
       "visualize": "openspec/specs/validation-errors/visualize.json",
       "archived": false,
-      "last_updated": "2026-06-17"
+      "last_updated": "2026-06-17",
+      "track": "spec",
+      "requirement_count": 5,
+      "scenario_count": 6
     },
     {
       "id": "2026-06-10-typewall-core-mvp",
       "title": "2026-06-10-typewall-core-mvp",
-      "type": "spec",
-      "status": "draft",
+      "type": "proposal",
+      "status": "archived",
       "path": "openspec/changes/archive/2026-06-10-typewall-core-mvp",
-      "spec_file": "openspec/changes/archive/2026-06-10-typewall-core-mvp/design.md",
+      "spec_file": "openspec/changes/archive/2026-06-10-typewall-core-mvp/proposal.md",
       "visualize": "openspec/changes/archive/2026-06-10-typewall-core-mvp/visualize.json",
-      "archived": false,
-      "last_updated": "2026-06-17"
+      "archived": true,
+      "last_updated": "2026-06-17",
+      "track": "change",
+      "tasks": {
+        "total": 39,
+        "done": 39
+      },
+      "docs": {
+        "proposal": "proposal.md",
+        "design": "design.md",
+        "tasks": "tasks.md"
+      },
+      "relations": {
+        "relates_to": [
+          "primitive-validation",
+          "schema-parsing",
+          "structured-validation",
+          "validation-errors"
+        ]
+      }
     },
     {
       "id": "2026-06-11-replace-mkdocs-with-mintlify",
       "title": "2026-06-11-replace-mkdocs-with-mintlify",
-      "type": "spec",
-      "status": "draft",
+      "type": "proposal",
+      "status": "archived",
       "path": "openspec/changes/archive/2026-06-11-replace-mkdocs-with-mintlify",
-      "spec_file": "openspec/changes/archive/2026-06-11-replace-mkdocs-with-mintlify/design.md",
+      "spec_file": "openspec/changes/archive/2026-06-11-replace-mkdocs-with-mintlify/proposal.md",
       "visualize": "openspec/changes/archive/2026-06-11-replace-mkdocs-with-mintlify/visualize.json",
-      "archived": false,
-      "last_updated": "2026-06-17"
+      "archived": true,
+      "last_updated": "2026-06-17",
+      "track": "change",
+      "tasks": {
+        "total": 30,
+        "done": 30
+      },
+      "docs": {
+        "proposal": "proposal.md",
+        "design": "design.md",
+        "tasks": "tasks.md"
+      },
+      "relations": {
+        "relates_to": [
+          "project-documentation"
+        ]
+      }
     },
     {
       "id": "2026-06-11-typewall-integrations-release",
       "title": "2026-06-11-typewall-integrations-release",
-      "type": "spec",
-      "status": "draft",
+      "type": "proposal",
+      "status": "archived",
       "path": "openspec/changes/archive/2026-06-11-typewall-integrations-release",
-      "spec_file": "openspec/changes/archive/2026-06-11-typewall-integrations-release/design.md",
+      "spec_file": "openspec/changes/archive/2026-06-11-typewall-integrations-release/proposal.md",
       "visualize": "openspec/changes/archive/2026-06-11-typewall-integrations-release/visualize.json",
-      "archived": false,
-      "last_updated": "2026-06-17"
+      "archived": true,
+      "last_updated": "2026-06-17",
+      "track": "change",
+      "tasks": {
+        "total": 50,
+        "done": 50
+      },
+      "docs": {
+        "proposal": "proposal.md",
+        "design": "design.md",
+        "tasks": "tasks.md"
+      },
+      "relations": {
+        "relates_to": [
+          "environment-parsing",
+          "fastapi-integration",
+          "package-release",
+          "schema-export",
+          "validation-cli"
+        ]
+      }
     },
     {
       "id": "2026-06-11-typewall-project-hardening",
       "title": "2026-06-11-typewall-project-hardening",
-      "type": "spec",
-      "status": "draft",
+      "type": "proposal",
+      "status": "archived",
       "path": "openspec/changes/archive/2026-06-11-typewall-project-hardening",
-      "spec_file": "openspec/changes/archive/2026-06-11-typewall-project-hardening/design.md",
+      "spec_file": "openspec/changes/archive/2026-06-11-typewall-project-hardening/proposal.md",
       "visualize": "openspec/changes/archive/2026-06-11-typewall-project-hardening/visualize.json",
-      "archived": false,
-      "last_updated": "2026-06-17"
+      "archived": true,
+      "last_updated": "2026-06-17",
+      "track": "change",
+      "tasks": {
+        "total": 37,
+        "done": 37
+      },
+      "docs": {
+        "proposal": "proposal.md",
+        "design": "design.md",
+        "tasks": "tasks.md"
+      },
+      "relations": {
+        "relates_to": [
+          "benchmark-suite",
+          "integration-conformance",
+          "package-architecture",
+          "project-documentation",
+          "project-organization",
+          "quality-automation"
+        ]
+      }
     },
     {
       "id": "2026-06-11-typewall-validation-enhancements",
       "title": "2026-06-11-typewall-validation-enhancements",
-      "type": "spec",
-      "status": "draft",
+      "type": "proposal",
+      "status": "archived",
       "path": "openspec/changes/archive/2026-06-11-typewall-validation-enhancements",
-      "spec_file": "openspec/changes/archive/2026-06-11-typewall-validation-enhancements/design.md",
+      "spec_file": "openspec/changes/archive/2026-06-11-typewall-validation-enhancements/proposal.md",
       "visualize": "openspec/changes/archive/2026-06-11-typewall-validation-enhancements/visualize.json",
-      "archived": false,
-      "last_updated": "2026-06-17"
+      "archived": true,
+      "last_updated": "2026-06-17",
+      "track": "change",
+      "tasks": {
+        "total": 44,
+        "done": 44
+      },
+      "docs": {
+        "proposal": "proposal.md",
+        "design": "design.md",
+        "tasks": "tasks.md"
+      },
+      "relations": {
+        "relates_to": [
+          "custom-processing",
+          "python-typing-integration",
+          "schema-composition",
+          "validation-constraints"
+        ]
+      }
     }
   ]
 }
