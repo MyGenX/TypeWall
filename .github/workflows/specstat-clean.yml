@@ -35,6 +35,16 @@ jobs:
       - name: Open clean PR
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_BODY: |
+            Removes all SpecStat-generated JSON files from `${{ inputs.root }}/`:
+            - `index.json`
+            - All `visualize.json` files (per-item and folder manifests)
+
+            **Why merge this?** The generated files are invalid or need to be fully regenerated from scratch.
+
+            **After merging:** Run the **SpecStat Init** workflow from the Actions tab or SpecStat settings to regenerate clean files.
+
+            **To cancel:** Close this PR — no files are changed until it is merged.
         run: |
           BRANCH="specstat/clean-$(date +%Y%m%d-%H%M%S)"
           git config user.name "specstat-bot"
@@ -49,14 +59,6 @@ jobs:
           git push origin "$BRANCH"
           gh pr create \
             --title "chore(openspec): clean SpecStat-generated JSON files" \
-            --body "Removes all SpecStat-generated JSON files from \`${{ inputs.root }}/\`:
-- \`index.json\`
-- All \`visualize.json\` files (per-item and folder manifests)
-
-**Why merge this?** The generated files are invalid or need to be fully regenerated from scratch.
-
-**After merging:** Run the **SpecStat Init** workflow from the Actions tab or SpecStat settings to regenerate clean files.
-
-**To cancel:** Close this PR — no files are changed until it is merged." \
+            --body "$PR_BODY" \
             --base "${{ github.event.repository.default_branch }}" \
             --head "$BRANCH"

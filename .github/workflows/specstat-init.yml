@@ -43,6 +43,16 @@ jobs:
       - name: Open init PR
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_BODY: |
+            Adds SpecStat-generated JSON metadata needed for visualization in SpecStat.
+
+            **Files added:**
+            - `${{ inputs.root }}/index.json` — central index of all specs and changes
+            - Per-item `visualize.json` files for visualization metadata
+
+            **Force regenerate:** ${{ inputs.force }}
+
+            These files are derived from your spec markdown files. To revert, close this PR — no spec content is lost.
         run: |
           BRANCH="specstat/init-$(date +%Y%m%d-%H%M%S)"
           git config user.name "specstat-bot"
@@ -57,14 +67,6 @@ jobs:
           git push origin "$BRANCH"
           gh pr create \
             --title "chore(openspec): initialize SpecStat JSON files" \
-            --body "Adds SpecStat-generated JSON metadata needed for visualization in SpecStat.
-
-**Files added:**
-- \`${{ inputs.root }}/index.json\` — central index of all specs and changes
-- Per-item \`visualize.json\` files for visualization metadata
-
-**Force regenerate:** ${{ inputs.force }}
-
-These files are derived from your spec markdown files. To revert, close this PR — no spec content is lost." \
+            --body "$PR_BODY" \
             --base "${{ github.event.repository.default_branch }}" \
             --head "$BRANCH"
