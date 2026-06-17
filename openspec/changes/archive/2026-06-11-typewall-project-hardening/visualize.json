@@ -2,10 +2,30 @@
   "type": "item",
   "id": "2026-06-11-typewall-project-hardening",
   "title": "2026-06-11-typewall-project-hardening",
-  "spec_type": "spec",
-  "status": "draft",
-  "owner": "",
-  "spec_file": "design.md",
+  "spec_type": "proposal",
+  "status": "archived",
+  "spec_file": "proposal.md",
   "created_at": "2026-06-17",
-  "last_updated": "2026-06-17"
+  "last_updated": "2026-06-17",
+  "archived": true,
+  "track": "change",
+  "tasks": {
+    "total": 37,
+    "done": 37
+  },
+  "docs": {
+    "proposal": "proposal.md",
+    "design": "design.md",
+    "tasks": "tasks.md"
+  },
+  "relations": {
+    "relates_to": [
+      "benchmark-suite",
+      "integration-conformance",
+      "package-architecture",
+      "project-documentation",
+      "project-organization",
+      "quality-automation"
+    ]
+  }
 }

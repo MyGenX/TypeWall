@@ -2,10 +2,25 @@
   "type": "item",
   "id": "2026-06-11-replace-mkdocs-with-mintlify",
   "title": "2026-06-11-replace-mkdocs-with-mintlify",
-  "spec_type": "spec",
-  "status": "draft",
-  "owner": "",
-  "spec_file": "design.md",
+  "spec_type": "proposal",
+  "status": "archived",
+  "spec_file": "proposal.md",
   "created_at": "2026-06-17",
-  "last_updated": "2026-06-17"
+  "last_updated": "2026-06-17",
+  "archived": true,
+  "track": "change",
+  "tasks": {
+    "total": 30,
+    "done": 30
+  },
+  "docs": {
+    "proposal": "proposal.md",
+    "design": "design.md",
+    "tasks": "tasks.md"
+  },
+  "relations": {
+    "relates_to": [
+      "project-documentation"
+    ]
+  }
 }
