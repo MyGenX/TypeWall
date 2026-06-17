@@ -61,4 +61,10 @@ jobs:
             --title "chore(openspec): clean SpecStat-generated JSON files" \
             --body "$PR_BODY" \
             --base "${{ github.event.repository.default_branch }}" \
-            --head "$BRANCH"
+            --head "$BRANCH" || {
+            echo ""
+            echo "❌ PR creation failed."
+            echo "   Fix: Settings → Actions → General → Workflow permissions"
+            echo "   Enable: 'Allow GitHub Actions to create and approve pull requests'"
+            exit 1
+          }
