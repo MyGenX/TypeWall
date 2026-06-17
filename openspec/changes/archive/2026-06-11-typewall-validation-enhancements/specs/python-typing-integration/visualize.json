@@ -1,0 +1,11 @@
+{
+  "type": "item",
+  "id": "python-typing-integration",
+  "title": "python-typing-integration",
+  "spec_type": "spec",
+  "status": "draft",
+  "owner": "",
+  "spec_file": "spec.md",
+  "created_at": "2026-06-17",
+  "last_updated": "2026-06-17"
+}
